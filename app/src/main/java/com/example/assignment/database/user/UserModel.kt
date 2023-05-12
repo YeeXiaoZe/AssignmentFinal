@@ -3,6 +3,7 @@ package com.example.assignment.database.user
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+//The user attributes
 @Entity
 data class UserModel (
     @PrimaryKey var username: String = "",

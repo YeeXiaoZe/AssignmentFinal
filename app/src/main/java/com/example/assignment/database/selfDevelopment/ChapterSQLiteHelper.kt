@@ -147,4 +147,19 @@ class ChapterSQLiteHelper(context: Context) :
 
         return attribute
     }
+
+    fun updateAttribute(COLUMN_FOR_UPDATE: String, STRING_UPDATE: String, CHAPTER_ID: String) {
+        val db = this.writableDatabase
+
+        val contentValues = ContentValues()
+        val update = contentValues.apply{
+            put(COLUMN_FOR_UPDATE, STRING_UPDATE)
+        }
+
+        val selection = "chapterID = ?"
+        val selectionArgs = arrayOf(CHAPTER_ID)
+
+        db.update(CHAPTER_TABLE, update, selection, selectionArgs)
+        db.close()
+    }
 }

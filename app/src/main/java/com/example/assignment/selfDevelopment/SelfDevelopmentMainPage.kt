@@ -42,7 +42,7 @@ class SelfDevelopmentMainPage : AppCompatActivity() {
         binding.selfDevChapter.layoutManager = LinearLayoutManager(this)
         chapterList = sqliteHelper.getAttribute("title")
 
-        chapterAdapter = SelfDevChapterAdapter(chapterList)
+        chapterAdapter = SelfDevChapterAdapter(this, chapterList)
         binding.selfDevChapter.adapter = chapterAdapter
     }
 }

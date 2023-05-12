@@ -7,7 +7,8 @@ import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import com.example.assignment.database.selfDevelopment.ChapterSQLiteHelper
+import com.example.assignment.database.selfDevelopment.SubchapterModel
+import com.example.assignment.database.selfDevelopment.SubchapterSQLiteHelper
 import com.example.assignment.database.user.UserSQLiteHelper
 import com.example.assignment.databinding.LoginBinding
 
@@ -24,7 +25,23 @@ class Login : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        Log.i("Main Activity", "${ChapterSQLiteHelper(this).getAllChapter()}")
+        Log.i("Main Activity", "${SubchapterSQLiteHelper(this).getAllSubchapter()}")
+        SubchapterSQLiteHelper(this).insertSubchapter(
+            SubchapterModel(
+                subchapterID = "S00",
+                title = "Introduction to MYJOB Self-Development Course",
+                content = "Welcome to this self-development course!\n\nIn this course, you are going" +
+                        " to learn skills related to self-development on career prospects, both soft" +
+                        " skills and hard skills, which will be useful for finding a job.\n\nOther " +
+                        "than that, you are going to answer quizzes related to the chapter to test " +
+                        "your understanding. Upon completing the quiz with satisfactory score, not " +
+                        "only you will earn achievements as proof of course completion, but also " +
+                        "skills that you can apply in finding a job!\n\nHappy self-developing!",
+                link = "",
+                chapterID = "C0"
+            )
+        )
+
         super.onCreate(savedInstanceState)
         //Initialization
         binding = LoginBinding.inflate(layoutInflater)
@@ -41,6 +58,7 @@ class Login : AppCompatActivity() {
 
         binding.loginButton.setOnClickListener {
             //Do validation
+            Log.i("Main Activity", "${sqliteHelper.getAllUser()}")
             val idBool = validation.errorText(binding.loginIDError, validation(binding.loginID))
             val passwordBool =
                 validation.errorText(binding.loginPasswordError, validation(binding.loginPassword))

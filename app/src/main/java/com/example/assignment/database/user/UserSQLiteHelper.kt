@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper
 class UserSQLiteHelper(context: Context) :
     SQLiteOpenHelper(context, "User.db", null, 3)
 {
+    //The user attributes
     companion object
     {
         private const val USER_TABLE = "user"
@@ -30,6 +31,7 @@ class UserSQLiteHelper(context: Context) :
         db!!.execSQL("DROP TABLE IF EXISTS $USER_TABLE")
     }
 
+    //Use this method when want to insert a user record
     fun insertUser(user: UserModel): Long
     {
         val db = this.writableDatabase
@@ -47,6 +49,7 @@ class UserSQLiteHelper(context: Context) :
         return result
     }
 
+    //Use this method when want to get all the user records
     @SuppressLint("Range")
     fun getAllUser(): ArrayList<UserModel>
     {
@@ -94,6 +97,7 @@ class UserSQLiteHelper(context: Context) :
         return userList
     }
 
+    //Use this method when want to get a specific attribute (like their email/phone no)
     @SuppressLint("Range")
     fun getAttribute(COLUMN_NAME: String): ArrayList<String>
     {
@@ -130,6 +134,8 @@ class UserSQLiteHelper(context: Context) :
         return attributeList
     }
 
+    //Use this method when want to get a specific attribute under a condition (Example: get the role for the account with username "abcd")
+    //Eg. conditionalGetAttribute("role", "username", "abcd")
     @SuppressLint("Range")
     fun conditionalGetAttribute(COLUMN_NAME: String, CONDITIONAL_COLUMN: String, CONDITIONAL_STRING: String): String
     {
@@ -161,5 +167,23 @@ class UserSQLiteHelper(context: Context) :
         }
 
         return attribute
+    }
+
+    //Use this method if you want to update a field
+    //Example: Update the password for the account with the username "blablabla" to "1234"
+    //Solution: updateAttribute("password", "1234", "blablabla")
+    fun updateAttribute(COLUMN_FOR_UPDATE: String, STRING_UPDATE: String, USERNAME: String) {
+        val db = this.writableDatabase
+
+        val contentValues = ContentValues()
+        val update = contentValues.apply{
+            put(COLUMN_FOR_UPDATE, STRING_UPDATE)
+        }
+
+        val selection = "username = ?"
+        val selectionArgs = arrayOf(USERNAME)
+
+        db.update(USER_TABLE, update, selection, selectionArgs)
+        db.close()
     }
 }
