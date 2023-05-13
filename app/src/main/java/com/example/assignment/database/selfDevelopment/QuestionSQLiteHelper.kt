@@ -24,11 +24,13 @@ class QuestionSQLiteHelper(context: Context) :
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL("CREATE TABLE " + QUESTION_TABLE + "(" + QUESTION_ID +
-                " TEXT PRIMARY KEY, " + QUESTION + " TEXT, " + CORRECT_ANS + " TEXT, "
-                + WRONG_ANS_1 + " TEXT, " + WRONG_ANS_2 + " TEXT, " +
-                WRONG_ANS_3 + " TEXT, " + "FOREIGN KEY (" + QUIZ_ID + ") REFERENCES " +
-                QUIZ_TABLE + "(" + QUIZ_ID + ")"+ ")")
+        db?.execSQL(
+            ("CREATE TABLE $QUESTION_TABLE" + "(" + QUESTION_ID +
+                    " TEXT PRIMARY KEY, " + QUESTION + " TEXT, " + CORRECT_ANS + " TEXT, "
+                    + WRONG_ANS_1) + " TEXT, " + WRONG_ANS_2 + " TEXT, " +
+                    WRONG_ANS_3 + " TEXT, " + QUIZ_ID + " TEXT, " + "FOREIGN KEY (" + QUIZ_ID + ") REFERENCES " +
+                    QUIZ_TABLE + "(" + QUIZ_ID + "))"
+        )
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {

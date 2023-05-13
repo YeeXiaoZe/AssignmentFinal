@@ -20,8 +20,8 @@ class QuizSQLiteHelper(context: Context) :
 
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL("CREATE TABLE " + QUIZ_TABLE + "(" + QUIZ_ID +
-                " TEXT PRIMARY KEY, " + "FOREIGN KEY (" + CHAPTER_ID + ") REFERENCES " +
-                CHAPTER_TABLE + "(" + CHAPTER_ID + ")"+ ")")
+                " TEXT PRIMARY KEY, " + CHAPTER_ID + " TEXT, FOREIGN KEY (" + CHAPTER_ID + ") REFERENCES " +
+                CHAPTER_TABLE + "(" + CHAPTER_ID + "))")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {

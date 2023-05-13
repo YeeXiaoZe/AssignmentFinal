@@ -165,8 +165,46 @@ class SubchapterSQLiteHelper(context: Context) :
         return attribute
     }
 
-    fun foreignGetAttribute()
+    @SuppressLint("Range")
+    fun getRecords(CHAPTER_ID: String): ArrayList<SubchapterModel>
     {
+        val query = "SELECT * FROM $SUBCHAPTER_TABLE WHERE chapterID = '$CHAPTER_ID'"
+        val db = this.readableDatabase
+        val subchapterList: ArrayList<SubchapterModel> = ArrayList()
 
+        val cursor: Cursor?
+
+        try
+        {
+            cursor = db.rawQuery(query, null)
+        }
+        catch (ex: Exception)
+        {
+            ex.printStackTrace()
+            db.execSQL(query)
+
+            return ArrayList()
+        }
+
+        if (cursor.moveToFirst())
+        {
+            do
+            {
+                val subchapterID = cursor.getString(cursor.getColumnIndex("subchapterID"))
+                val title = cursor.getString(cursor.getColumnIndex("title"))
+                val content = cursor.getString(cursor.getColumnIndex("content"))
+                val link = cursor.getString(cursor.getColumnIndex("link"))
+                val chapterID = cursor.getString(cursor.getColumnIndex("chapterID"))
+
+                subchapterList.add(
+                    SubchapterModel(subchapterID = subchapterID, title = title, content = content,
+                        link = link, chapterID = chapterID))
+            }while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        db.close()
+
+        return subchapterList
     }
 }

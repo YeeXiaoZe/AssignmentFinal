@@ -4,8 +4,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
-@Entity(tableName = "question",
+//Make it serializable so that it can be passed through the intent
+@Entity(tableName = "chapter",
     foreignKeys = [ForeignKey(
         entity = ChapterModel::class,
         parentColumns = ["chapterID"],
@@ -19,4 +21,4 @@ data class SubchapterModel(
     var content: String,
     var link: String,
     @ColumnInfo(name = "chapterID") val chapterID: String
-)
+) : Serializable
